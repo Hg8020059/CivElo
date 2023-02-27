@@ -28,6 +28,7 @@ path = "pythonELO.xlsx"
 wb = openpyxl.load_workbook(path)
 fightsSheet = wb['Fights']
 dataSheet = wb["Data"]
+eloSheet = wb['Elo']
 
 while countFights:
     if fightsSheet.cell(column=1, row=fightCount + 1).value is not None:
@@ -140,5 +141,10 @@ for i in range(len(P1)-1):
                     elif WL1[i] == "L":
                         PlayerElo[j] -= currEloJ/currEloK * 10
                         PlayerElo[k] += currEloJ/currEloK * 10
+
+# Outputting Elo
+for i in range(len(Players)):
+    eloSheet.cell(column=1, row=i + 2).value = Players[i]
+    eloSheet.cell(column=2, row=i + 2).value = round(PlayerElo[i])
 
 wb.save("pythonELO.xlsx")
